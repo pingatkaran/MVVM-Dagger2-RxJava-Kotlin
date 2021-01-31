@@ -33,7 +33,7 @@ class JokesViewModel : ViewModel() {
 
     fun refresh() {
         fetchRandomJokes()
-        fetchRandomUsers()
+//        fetchRandomUsers()
     }
 
     fun fetchRandomJokes() {
