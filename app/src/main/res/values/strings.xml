@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MVVM-Dagger2-RxJava-Kotlin</string>
+    <string name="error">error</string>
+</resources>
