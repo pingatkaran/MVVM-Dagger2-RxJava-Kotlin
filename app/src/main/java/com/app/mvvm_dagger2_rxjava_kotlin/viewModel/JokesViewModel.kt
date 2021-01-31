@@ -2,6 +2,7 @@ package com.app.mvvm_dagger2_rxjava_kotlin.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.app.mvvm_dagger2_rxjava_kotlin.di.DaggerApiComponent
 import com.app.mvvm_dagger2_rxjava_kotlin.model.Data
 import com.app.mvvm_dagger2_rxjava_kotlin.model.Jokes
 import com.app.mvvm_dagger2_rxjava_kotlin.model.UserModel
@@ -12,6 +13,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 class JokesViewModel : ViewModel() {
 
@@ -20,8 +22,14 @@ class JokesViewModel : ViewModel() {
     val jokesLoadError = MutableLiveData<Boolean>()
     val loadingProgressBar = MutableLiveData<Boolean>()
 
-    val jokesService = JokeService()
+    @Inject
+    lateinit var jokesService : JokeService
     val disposable = CompositeDisposable()
+
+
+    init {
+        DaggerApiComponent.create().inject(this)
+    }
 
     fun refresh() {
         fetchRandomJokes()
@@ -86,6 +94,11 @@ class JokesViewModel : ViewModel() {
 
                 })
         )
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposable.clear()
     }
 
 }
